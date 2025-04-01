@@ -1,11 +1,16 @@
 {
-  "name": "wp-dev-tools",
+  "name": "wp-tools",
   "version": "1.0.0",
-  "description": "WordPress geliştirme araçları",
-  "main": "index.js",
+  "description": "A command-line tool to streamline the version release process for WordPress plugins.",
+  "main": "bin/wp-tools.js",
   "bin": {
     "wp-tools": "./bin/wp-tools.js"
   },
+  "files": [
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
   "dependencies": {
     "basic-ftp": "^5.0.2",
     "configstore": "^5.0.1",
@@ -14,12 +19,27 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/h3xexe/wp-tools.git"
+  },
   "keywords": [
     "wordpress",
     "plugin",
-    "development",
-    "release"
+    "release",
+    "deploy",
+    "cli",
+    "automation",
+    "build",
+    "ftp"
   ],
-  "author": "wp-dev-tools",
-  "license": "MIT"
+  "author": "h3xexe",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
+  "bugs": {
+    "url": "https://github.com/h3xexe/wp-tools/issues"
+  },
+  "homepage": "https://github.com/h3xexe/wp-tools#readme"
 }

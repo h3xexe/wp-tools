@@ -641,17 +641,46 @@ const release = async (skipPrompts = false) => {
     return; // Stop execution if config loading failed
   }
   
-  // Get current version from the main plugin file or package.json
-  let currentVersion = '0.1.0';
-  
+  // Get current version - Prioritize main plugin file, fallback to package.json
+  let currentVersion = null;
+  const pluginFilePath = path.join(rootDir, config.mainFile);
   const packageJsonPath = path.join(rootDir, 'package.json');
-  if (fs.existsSync(packageJsonPath)) {
+
+  // 1. Try reading from main plugin file
+  if (config.mainFile && fs.existsSync(pluginFilePath)) {
+    try {
+      const pluginFileContent = fs.readFileSync(pluginFilePath, 'utf8');
+      const versionMatch = pluginFileContent.match(/Version:\s*([\d\.]+)/);
+      if (versionMatch && versionMatch[1]) {
+        currentVersion = versionMatch[1];
+        log(`Read current version from ${config.mainFile}: ${currentVersion}`, colors.blue);
+      } else {
+        log(`Could not find "Version:" header in ${config.mainFile}.`, colors.yellow);
+      }
+    } catch (error) {
+      log(`Error reading ${config.mainFile}: ${error.message}`, colors.yellow);
+    }
+  }
+
+  // 2. Fallback to package.json if not found in main file
+  if (!currentVersion && fs.existsSync(packageJsonPath)) {
     try {
       const packageData = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
-      currentVersion = packageData.version;
+      if (packageData.version) {
+          currentVersion = packageData.version;
+          log(`Read current version from package.json: ${currentVersion}`, colors.blue);
+      } else {
+        log(`Could not find "version" field in package.json.`, colors.yellow);
+      }
     } catch (error) {
       log(`Error reading package.json: ${error.message}`, colors.yellow);
     }
+  }
+
+  // 3. Default to 0.1.0 if not found anywhere
+  if (!currentVersion) {
+    currentVersion = '0.1.0';
+    log(`Could not determine current version from plugin file or package.json. Defaulting to: ${currentVersion}`, colors.yellow);
   }
   
   log(`Plugin: ${config.pluginName}`, colors.cyan);
