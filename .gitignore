@@ -1,0 +1,7 @@
+# Test comment
+node_modules/
+.cache
+
+# Another comment
+.env
+dist/

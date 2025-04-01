@@ -1,0 +1,25 @@
+{
+  "name": "wp-dev-tools",
+  "version": "1.0.0",
+  "description": "WordPress geliştirme araçları",
+  "main": "index.js",
+  "bin": {
+    "wp-tools": "./bin/wp-tools.js"
+  },
+  "dependencies": {
+    "basic-ftp": "^5.0.2",
+    "configstore": "^5.0.1",
+    "dotenv": "^16.0.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "wordpress",
+    "plugin",
+    "development",
+    "release"
+  ],
+  "author": "wp-dev-tools",
+  "license": "MIT"
+}
